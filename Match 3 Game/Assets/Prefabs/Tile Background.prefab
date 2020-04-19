@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3914188371608833251}
   - component: {fileID: 7353227743900734761}
-  - component: {fileID: 3758829739263317532}
+  - component: {fileID: 8719237071909132586}
   m_Layer: 0
   m_Name: Tile Background
   m_TagString: Untagged
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3758829739263317532
+--- !u!114 &8719237071909132586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

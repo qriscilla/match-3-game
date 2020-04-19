@@ -65,8 +65,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BackgroundTile.cs" />
     <Compile Include="Assets\Scripts\Board.cs" />
-    <Compile Include="Assets\Scripts\Dot.cs" />
-    <Compile Include="Assets\Scripts\SwipeController.cs" />
     <Reference Include="Unity.XR.Management">
       <HintPath>/Users/priscillawhang/Desktop/Coding/match-3-game/Match 3 Game/Library/ScriptAssemblies/Unity.XR.Management.dll</HintPath>
     </Reference>
