@@ -81,4 +81,27 @@ public class Board : MonoBehaviour
         return false;
     }
 
+    private void DestroyMatchesAt(int column, int row) // Method for destroying matches
+    {
+        if(allDots[column, row].GetComponent<Dot>().isMatched) // Check if dot is currently matched
+        {
+            Destroy(allDots[column, row]); // Destroy dots
+            allDots[column, row] = null; // Make spot empty
+        }
+    }
+
+    public void DestroyMatches() // Destroy all matches
+    {
+        for(int i = 0; i < width; i++)
+        {
+            for(int j = 0; j < height; j++)
+            {
+                if(allDots[i, j] != null) // Does a piece exist there?
+                {
+                    DestroyMatchesAt(i, j); // If so, destroy
+                }
+            }
+        }
+    }
+
 }
