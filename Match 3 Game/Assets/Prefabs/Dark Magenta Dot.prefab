@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3983878791945201655}
   - component: {fileID: 2494850790750015615}
   - component: {fileID: 8257782063239276336}
+  - component: {fileID: 1274950694863975767}
   m_Layer: 0
   m_Name: Dark Magenta Dot
   m_TagString: Dark Magenta Dot
@@ -98,3 +99,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.33333334
+--- !u!114 &1274950694863975767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8804775926673841028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c418f0931a505420b8a6a035151a5f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeAngle: 0
