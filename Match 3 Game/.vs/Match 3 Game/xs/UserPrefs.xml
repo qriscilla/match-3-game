@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{EC1180B7-5559-D246-7656-4F808797C537}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Dot.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Board.cs" Line="19" Column="49" />
+      <File FileName="Assets/Scripts/Dot.cs" Line="33" Column="33" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="65af3c89-99e3-4bda-85fc-573ab9e915ee" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
