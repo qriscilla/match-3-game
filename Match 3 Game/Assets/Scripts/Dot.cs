@@ -14,6 +14,7 @@ public class Dot : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
+    private FindMatches findMatches;
     private Board board;
     private GameObject otherDot;
     private Vector2 firstTouchPosition; // x-y position of the first touch
@@ -26,18 +27,19 @@ public class Dot : MonoBehaviour
     void Start()
     {
         board = FindObjectOfType<Board>();
-        targetX = (int)transform.position.x; // Cast targetX as an integer
-        targetY = (int)transform.position.y; // Cast targetY as an integer
-        row = targetY;
-        column = targetX;
-        previousRow = row;
-        previousColumn = column;
+        findMatches = FindObjectOfType<FindMatches>();
+        //targetX = (int)transform.position.x;
+        //targetY = (int)transform.position.y;
+        //row = targetY;
+        //column = targetX;
+        //previousRow = row;
+        //previousColumn = column;
     }
 
     // Update is called once per frame
     void Update()
     {
-        FindMatches();
+        //FindMatches();
         if(isMatched)
         {
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
@@ -49,26 +51,34 @@ public class Dot : MonoBehaviour
         {
             // Move towards the target
             tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if(board.allDots[column, row] != this.gameObject)
+            {
+                board.allDots[column, row] = this.gameObject;
+            }
+            findMatches.FindAllMatches();
         } else
         {
             // Directly set the position
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
         }
         if (Mathf.Abs(targetY - transform.position.y) > .1)
         {
             // Move towards the target
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if (board.allDots[column, row] != this.gameObject)
+            {
+                board.allDots[column, row] = this.gameObject;
+            }
+            findMatches.FindAllMatches();
         }
         else
         {
             // Directly set the position
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
         }
     }
 
@@ -84,6 +94,8 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column = column;
                 row = previousRow;
                 column = previousColumn;
+                yield return new WaitForSeconds(.5f);
+                board.currentState = GameState.move;
             } else
             {
                 board.DestroyMatches();
@@ -95,14 +107,19 @@ public class Dot : MonoBehaviour
     // Unity's built-in function that detects when user clicks on something with a collider
     private void OnMouseDown()
     {
-        firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log(firstTouchPosition);
+        if(board.currentState == GameState.move) // If game is in move state
+        {
+            firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
     }
 
     private void OnMouseUp() // When you're mouse is up (globally, not necessarily on the collider)
     {
-        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalculateAngle(); // Calling CalculateAngle() function
+        if(board.currentState == GameState.move)
+        {
+            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            CalculateAngle(); // Calling CalculateAngle() function
+        }
     }
 
     void CalculateAngle()
@@ -112,6 +129,10 @@ public class Dot : MonoBehaviour
         {
             swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             MovePieces();
+            //board.currentState = GameState.wait; // Change game state to wait as soon as we calculate the angle
+        } else
+        {
+            board.currentState = GameState.move;
         }
     }
 
@@ -121,24 +142,32 @@ public class Dot : MonoBehaviour
         {
             // Right swipe
             otherDot = board.allDots[column + 1, row]; // Find the dot to its right
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().column -= 1;
             column += 1; // Update the touched dot's column
         } else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
             // Up swipe
             otherDot = board.allDots[column, row + 1]; // Find the dot above
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().row -= 1;
             row += 1; // Update the touched dot's row
         } else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0) // OR because we're checking if it's greater than 135 or less than -135
         {
             // Left swipe
             otherDot = board.allDots[column - 1, row]; // Find the dot to its left
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().column += 1;
             column -= 1; // Update the touched dot's column
         } else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
             // Down swipe
             otherDot = board.allDots[column, row - 1]; // Find the below dot
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().row += 1;
             row -= 1; // Update the touched dot's row
         }
